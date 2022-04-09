@@ -1,0 +1,22 @@
+<mat-card>
+    <p>
+        <mat-form-field appearance="fill">
+            <mat-label>Наименование</mat-label>
+            <input matInput [(ngModel)]="name">
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field appearance="fill">
+            <mat-label>Описание</mat-label>
+            <input matInput [(ngModel)]="description">
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field appearance="fill" floatLabel="always">
+            <mat-label>Amount</mat-label>
+            <input matInput type="number" class="example-right-align" placeholder="0" [(ngModel)]="price">
+            <span matPrefix>Р&nbsp;</span>
+            <span matSuffix>.00</span>
+        </mat-form-field>
+    </p>
+</mat-card>
