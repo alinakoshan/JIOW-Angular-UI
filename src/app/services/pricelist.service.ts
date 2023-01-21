@@ -5,10 +5,14 @@ import { PriceList } from '../models/pricelist';
 @Injectable()
 export class PriceListService {
 
-    private priceListUrl = 'http://localhost:8080/product';
+    private priceListUrl = 'http://localhost:8080/priceList';
     constructor(private http: HttpClient) { }
 
     getPriceList() {
         return this.http.get<Array<PriceList>>(this.priceListUrl);
+    }
+
+    savePriceList(priceList: PriceList) {
+        return this.http.post<PriceList>(this.priceListUrl, priceList);
     }
 }

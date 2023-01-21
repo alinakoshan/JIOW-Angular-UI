@@ -6,7 +6,7 @@ import { PriceListService } from '../../services/pricelist.service';
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css'],
-  providers:  [ PriceListService ]
+  providers: [PriceListService]
 })
 export class ProductListComponent implements OnInit {
 
@@ -18,7 +18,9 @@ export class ProductListComponent implements OnInit {
 
   ngOnInit() {
     this.priceListService.getPriceList()
-    .subscribe((data: Array<PriceList>) => this.priceList = data);  }
-  
+      .subscribe((data: Array<PriceList>) => this.priceList = data);
+  }
+
+
 }
 
