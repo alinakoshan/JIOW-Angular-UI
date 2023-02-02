@@ -2,9 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { PriceListService } from 'src/app/services/pricelist.service';
 import { ProductService } from 'src/app/services/product.service';
 import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, FormControl, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { Product } from '../../models/product';
-import {map, Observable, startWith} from 'rxjs';
+import {Observable} from 'rxjs';
+import {map, startWith, switchMap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-detail',
@@ -14,30 +15,31 @@ import {map, Observable, startWith} from 'rxjs';
 })
 export class ProductDetailComponent implements OnInit {
 
+  productCode = new FormControl<string | Product>('');
 
-  form: FormGroup = new FormGroup({
-    price: new FormControl(),
-    name: new FormControl(),
-    description: new FormControl(),
-    productCode: new FormControl<string| Product>() 
+  form: UntypedFormGroup = new UntypedFormGroup({
+    price: new UntypedFormControl(),
+    name: new UntypedFormControl(),
+    description: new UntypedFormControl(),
   });
 
-  options: Product[] = [{code: 'P1', name: 'Mary', description: ''}];
-  filteredOptions = new Observable<Array<Product>>();
+  options: Product[] = [{ id: 'P1', name: 'Mary', description: '' }];
 
-  constructor(private priceListService: PriceListService, private productService: ProductService, private router: Router, private fb: FormBuilder) { }
+  constructor(private priceListService: PriceListService, private productService: ProductService, private router: Router, private fb: UntypedFormBuilder) { }
+
+  filteredOptions = new Observable<Product[]>();
 
   ngOnInit() {
-    this.filteredOptions = this.form.get('productCode')?.valueChanges.pipe(
-      map(value => {
-        const  = typeof value === 'string' ? value : value?.code;
-        return code ? code : this.options.slice();
-      }),
-    );
+    this.filteredOptions = this.productCode.valueChanges.pipe(
+      startWith(''),
+      switchMap(value => {
+        const code = typeof value === 'string' ? value : value?.id;
+        return this.productService.getProductByNameLike(code as string);
+      }));
   }
 
   displayFn(product: Product): string {
-    return product && product.code ? product.code : '';
+    return product && product.id ? product.id : '';
   }
 
 
