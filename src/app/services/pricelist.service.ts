@@ -12,6 +12,10 @@ export class PriceListService {
         return this.http.get<Array<PriceList>>(this.priceListUrl);
     }
 
+    getPriceListByNameLike(productCode: string) {
+        return this.http.get<Array<PriceList>>(this.priceListUrl + "?code=" + productCode);
+    }
+
     savePriceList(priceList: PriceList) {
         return this.http.post<PriceList>(this.priceListUrl, priceList);
     }
