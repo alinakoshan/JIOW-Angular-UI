@@ -5,12 +5,15 @@
             <p>
                 <mat-form-field appearance="fill">  
                     <mat-label>Код продукта</mat-label>
-                    <input type="text" matInput [formControl]="productCode" [matAutocomplete]="auto">
-                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                    <input type="text" matInput [formControl]="productCode" [matAutocomplete]="auto" [errorStateMatcher]="matcher">
+                      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                         <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
                             {{option.id}}
                         </mat-option>
-                    </mat-autocomplete>
+                      </mat-autocomplete>
+                      <mat-error *ngIf="productCode.hasError('required')">
+                        Name is <strong>required</strong>
+                      </mat-error>
                 </mat-form-field>
             </p>
             <p>

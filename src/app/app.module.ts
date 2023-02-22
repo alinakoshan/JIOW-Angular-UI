@@ -37,7 +37,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     MatInputModule,
     FormsModule,
     ReactiveFormsModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
   ],
   providers: [PriceListService],
   bootstrap: [AppComponent]
